@@ -1,8 +1,16 @@
-import { MenuItem } from "@mui/material";
+import { Grid, MenuItem } from "@mui/material";
 import { useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import products from "../../Query/ProductsQuery";
-import "./SideBar.style.css";
+
+const classes = {
+  List: {
+    minWidth: "15%",
+  },
+  menuItems: {
+    width: "100%",
+  },
+};
 
 const SideBar = () => {
   const {
@@ -24,13 +32,15 @@ const SideBar = () => {
   if (isLoading) return <>Loading...</>;
 
   return (
-    <div className="side-bar">
-      <div>
-        {category.map((item, index) => {
-          return <MenuItem key={index}>{item}</MenuItem>;
-        })}
-      </div>
-    </div>
+    <Grid>
+      {category.map((item, index) => {
+        return (
+          <MenuItem key={index} style={classes.menuItems}>
+            {item}
+          </MenuItem>
+        );
+      })}
+    </Grid>
   );
 };
 

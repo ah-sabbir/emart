@@ -1,83 +1,3 @@
-// // import Button from "@mui/core/Button";
-// import {
-//   Button,
-//   Card,
-//   CardActions,
-//   CardContent,
-//   Typography,
-// } from "@mui/material";
-// // import makeStyles from "@mui/material/styles";
-// // import Card from "@material-ui/core/Card";
-// // import Typography from "@mui/core/Typography";
-
-// const useStyles = {
-//   root: {
-//     minWidth: 275,
-//   },
-//   bullet: {
-//     display: "inline-block",
-//     margin: "0 2px",
-//     transform: "scale(0.8)",
-//   },
-//   title: {
-//     fontSize: 14,
-//   },
-//   pos: {
-//     marginBottom: 12,
-//   },
-// };
-
-// const ProductCard = ({
-//   key,
-//   category,
-//   name,
-//   seller,
-//   wholePrice,
-//   priceFraction,
-//   stock,
-//   star,
-//   starCount,
-//   img,
-//   url,
-//   features,
-//   price,
-//   shipping,
-// }) => {
-//   const classes = useStyles;
-//   const bull = <span className={classes.bullet}>•</span>;
-//   return (
-//     <>
-//       <Card className={classes.root}>
-//         <CardContent>
-//           <Typography
-//             className={classes.title}
-//             color="textSecondary"
-//             gutterBottom
-//           >
-//             Word of the Day
-//           </Typography>
-//           <Typography variant="h5" component="h2">
-//             be{bull}nev{bull}o{bull}lent
-//           </Typography>
-//           <Typography className={classes.pos} color="textSecondary">
-//             adjective
-//           </Typography>
-//           <Typography variant="body2" component="p">
-//             well meaning and kindly.
-//             <br />
-//             {'"a benevolent smile"'}
-//           </Typography>
-//         </CardContent>
-//         <CardActions>
-//           <Button size="small">Learn More</Button>
-//         </CardActions>
-//       </Card>
-//     </>
-//   );
-// };
-
-// export default ProductCard;
-
 import {
   Button,
   Card,
@@ -85,15 +5,25 @@ import {
   CardActions,
   CardContent,
   CardMedia,
+  Rating,
   Typography,
 } from "@mui/material";
-// import { makeStyles } from "@mui/styles";
 
-// const useStyles = makeStyles({
-//   root: {
-//     maxWidth: 345,
-//   },
-// });
+const classes = {
+  CardMedia: {
+    padding: "5px",
+  },
+  Card: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+    padding: "15px",
+    lineHeight: "28px",
+    // alignItems: "center",
+    maxWidth: "300px",
+    margin: "10px",
+  },
+};
 
 export default function ProductCard(props) {
   const {
@@ -114,32 +44,49 @@ export default function ProductCard(props) {
   } = props.Product;
   //   console.log(name);
   return (
-    <Card style={{ maxWidth: "300px", margin: "10px" }}>
-      <CardActionArea>
+    <Card style={classes.Card}>
+      <CardActionArea onClick={() => console.log("open url with params:", key)}>
         <CardMedia
           component="img"
           alt="Contemplative Reptile"
           //   height="100%"
           image={img}
           title={name}
-          style={{ margin: "5px" }}
+          style={classes.CardMedia}
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {name}
+          <Typography
+            gutterBottom
+            variant="h5"
+            component="span"
+            fontSize="16px"
+            lineHeight="18px"
+          >
+            {name && name}
           </Typography>
           <Typography variant="body2" color="textSecondary" component="p">
-            Lizards are a widespread group of squamate reptiles, with over 6,000
-            species, ranging across all continents except Antarctica
+            {/* {seller} */}
+            {/* <Rating name="read-only" value={star} readOnly />({starCount}) */}
           </Typography>
         </CardContent>
       </CardActionArea>
+      <Typography variant="body2" color="textSecondary" component="p">
+        <Rating name="read-only" value={star} readOnly />({starCount})
+      </Typography>
+
+      <Typography variant="h2" color="textSecondary" component="p">
+        ${price}
+        {/* {priceFraction} */}
+      </Typography>
+      <Typography variant="span">In Stock: {stock}</Typography>
+      <Typography variant="span">${shipping} shipping</Typography>
       <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
+        <Button
+          size="small"
+          color="primary"
+          onClick={() => console.log("add to cart : ", { key })}
+        >
+          Add to Cart
         </Button>
       </CardActions>
     </Card>
