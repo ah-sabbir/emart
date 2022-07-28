@@ -1,6 +1,7 @@
 import { Grid } from "@mui/material";
 import { useMemo, useState } from "react";
 import { useQuery } from "react-query";
+import Header from "../../components/Header/Header";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import SideBar from "../../components/SideBar/SideBar";
 import products from "../../Query/ProductsQuery";
@@ -37,16 +38,19 @@ const Home = () => {
   }, [productData]);
 
   return (
-    <Grid container style={classes.container}>
-      <SideBar />
-      <Grid item style={classes.cardContainer}>
-        {/* {Products && console.log(Products)} */}
-        {Products &&
-          Products.map((product, index) => {
-            return product && <ProductCard key={index} Product={product} />;
-          })}
+    <>
+      <Header />
+      <Grid container style={classes.container}>
+        <SideBar />
+        <Grid item style={classes.cardContainer}>
+          {/* {Products && console.log(Products)} */}
+          {Products &&
+            Products.map((product, index) => {
+              return product && <ProductCard key={index} Product={product} />;
+            })}
+        </Grid>
       </Grid>
-    </Grid>
+    </>
   );
 };
 
