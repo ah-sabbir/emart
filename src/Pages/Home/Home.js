@@ -1,5 +1,5 @@
 import { Button, Grid } from "@mui/material";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "react-query";
 import Header from "../../components/Header/Header";
 import Loader from "../../components/Loader/Loader";
@@ -31,7 +31,8 @@ const Home = () => {
   const [category, setCategory] = useState([]);
   const [counter, setCounter] = useState(10);
   const [pageNum, setPageNum] = useState(1);
-
+  const [isAuthenticate, setIsAuthenticate] = useState(false);
+  const [user, setUser] = useState({});
   // const [isOpen, setOpen] = useState(false);
   const {
     data: productData,
@@ -39,6 +40,13 @@ const Home = () => {
     isError,
     isLoading,
   } = useQuery(["products"], products);
+  useEffect(() => {
+    const usr = JSON.parse(localStorage.getItem("emart-user"));
+    if (usr) {
+      setIsAuthenticate(true);
+      setUser({ ...usr });
+    }
+  }, []);
 
   useMemo(() => {
     setProducts(productData);
@@ -47,18 +55,16 @@ const Home = () => {
   }, [productData]);
 
   if (isLoading) return <Loader open={true} />;
+  if (isError) return <h1>Something went wrong for : {error}</h1>;
 
   return (
     <>
-      <Header />
+      <Header user={user} isAuthenticate={isAuthenticate} />
       <Grid container style={classes.container}>
-        {/* <Loader open={isOpen} /> */}
         <SideBar category={category} />
         <Grid container style={{ justifyContent: "center" }}>
           <Grid item style={classes.cardContainer}>
             {/* {console.log(isOpen)} */}
-            {/* {Products && console.log(Products)} */}
-
             {Products &&
               Products.slice(pageNum, counter).map((product, index) => {
                 return product && <ProductCard key={index} Product={product} />;
